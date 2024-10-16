@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Portfolio with Interactive Background</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Helvetica, Arial, sans-serif;
+            height: 100%;
+            overflow: hidden;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #ff0000;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            z-index: 3;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header-left a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        .header-left a:hover {
+            opacity: 0.8;
+        }
+        .header-right {
+            display: flex;
+            gap: 5px;
+        }
+        .icon {
+            width: 24px;
+            height: 20px;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .icon img {
+            width: 100%;
+            height: auto;
+            max-width: 24px;
+            max-height: 20px;
+            object-fit: contain;
+        }
+        .icon:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        #drawing-area {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            cursor: crosshair;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            pointer-events: none;
+        }
+        .artist-description {
+            width: calc(600px - 192px + 192px);
+            max-width: 100%;
+            text-align: center;
+            padding: 20px;
+            color: #ff0000;
+            pointer-events: none;
+        }
+        .artist-description p:first-of-type {
+            text-indent: 2em;
+            text-align: justify;
+            text-align-last: center;
+        }
+        .artist-description p:last-of-type {
+            text-align: justify;
+            text-align-last: center;
+        }
+        @media (max-width: 768px) {
+            .header {
+                font-size: 14px;
+            }
+            .artist-description {
+                width: calc(100% - 40px);
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="drawing-area"></canvas>
+    <div class="header">
+        <div class="header-left">
+            <a href="profolio(front page).html">+</a>
+            <a href="information.html">information</a>
+            <a href="painting.html">painting</a>
+            <a href="profolio(interactive).html">interactive</a>
+        </div>
+        <div class="header-right">
+            <a href="https://www.instagram.com/your_instagram_username" target="_blank" class="icon" aria-label="Instagram">
+                <img src="instagram.png" alt="Instagram">
+            </a>
+            <a href="https://www.youtube.com/your_youtube_channel" target="_blank" class="icon" aria-label="YouTube">
+                <img src="youtube.png" alt="YouTube">
+            </a>
+            <a href="https://www.linkedin.com/in/your_linkedin_profile" target="_blank" class="icon" aria-label="LinkedIn">
+                <img src="linkedin.png" alt="LinkedIn">
+            </a>
+            <a href="mailto:your.email@example.com" class="icon" aria-label="Email">
+                <img src="email.png" alt="Email">
+            </a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="artist-description">
+            <h2>Artist Statement</h2>
+            <p>As an artist, I like to explore where tech and human perception meet. My work takes digital data and turns it into immersive visual experiences, giving people a chance to rethink how they connect with the digital world. Through interactive installations and generative art, I blur the line between the virtual and the physical, creating moments where tech becomes a tool for emotional and sensory vibes.</p>
+            <p>I work with coding, sound design, and experimental setups, pushing the limits of traditional art forms. With a mix of chance and user interaction, every piece takes on its own life, echoing the ever-changing rhythm of our digital existence.</p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('drawing-area');
+        const ctx = canvas.getContext('2d');
+
+        let circles = [];
+        let isDrawing = false;
+        let startX, startY;
+        let sessionColor = getGrayscaleColor();
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            redrawCircles();
+        }
+
+        function getGrayscaleColor() {
+            const value = Math.floor(Math.random() * 256);
+            return `rgb(${value},${value},${value})`;
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            startX = e.clientX - canvas.offsetLeft;
+            startY = e.clientY - canvas.offsetTop;
+        }
+
+        function drawCircle(e) {
+            if (!isDrawing) return;
+
+            const endX = e.clientX - canvas.offsetLeft;
+            const endY = e.clientY - canvas.offsetTop;
+
+            const radius = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+
+            ctx.beginPath();
+            ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = sessionColor;
+            ctx.fill();
+
+            circles.push({ x: startX, y: startY, radius: radius, color: sessionColor });
+            saveDrawing();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function redrawCircles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            circles.forEach(circle => {
+                ctx.beginPath();
+                ctx.arc(circle.x, circle.y, circle.radius, 0, 2 * Math.PI);
+                ctx.fillStyle = circle.color;
+                ctx.fill();
+            });
+        }
+
+        function saveDrawing() {
+            localStorage.setItem('portfolioDrawing', JSON.stringify(circles));
+        }
+
+        function loadDrawing() {
+            const savedData = localStorage.getItem('portfolioDrawing');
+            if (savedData) {
+                circles = JSON.parse(savedData);
+                redrawCircles();
+            }
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', drawCircle);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            loadDrawing();
+            sessionColor = getGrayscaleColor(); // New color for each page load
+        });
+    </script>
+</body>
+</html>
