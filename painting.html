@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Works - Art Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Helvetica, Arial, sans-serif;
+            height: 100%;
+            overflow: auto;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #ff0000;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            z-index: 3;
+            font-family: 'Black Ops One', cursive;
+            letter-spacing: 1px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header-left a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        .header-left a:hover {
+            opacity: 0.8;
+        }
+        .header-right {
+            display: flex;
+            gap: 5px;
+        }
+        .icon {
+            width: 24px;
+            height: 20px;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .icon img {
+            width: 100%;
+            height: auto;
+            max-width: 24px;
+            max-height: 20px;
+            object-fit: contain;
+        }
+        .icon:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 20px 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .content::before {
+            content: '';
+            position: fixed;
+            left: 100px;
+            top: 37px;
+            bottom: 0;
+            width: 1px;
+            background-color: #ff0000;
+            z-index: 1;
+        }
+
+        .artwork-section {
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .artwork-section:first-child {
+            margin-top: 96px;
+        }
+
+        .image-container {
+            width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .video-container {
+            width: 600px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .description {
+            text-align: center;
+            max-width: 400px;
+            padding: 0 20px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            height: 400px;
+        }
+
+        .description p {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .image-container, .video-container {
+                width: 300px;
+                height: 300px;
+            }
+            .header {
+                font-size: 14px;
+            }
+            .artwork-section {
+                margin-bottom: 60px;
+            }
+            .content::before {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <a href="frontPage.html">+</a>
+            <a href="index.html">INFORMATION</a>
+            <a href="painting.html">ILLUSTRATION</a>
+            <a href="interactive.html">INTERACTIVE</a>
+        </div>
+        <div class="header-right">
+            <a href="https://www.instagram.com/your_instagram_username" target="_blank" class="icon" aria-label="Instagram">
+                <img src="instagram.png" alt="Instagram">
+            </a>
+            <a href="https://www.youtube.com/your_youtube_channel" target="_blank" class="icon" aria-label="YouTube">
+                <img src="youtube.png" alt="YouTube">
+            </a>
+            <a href="https://www.linkedin.com/in/your_linkedin_profile" target="_blank" class="icon" aria-label="LinkedIn">
+                <img src="linkedin.png" alt="LinkedIn">
+            </a>
+            <a href="mailto:your.email@example.com" class="icon" aria-label="Email">
+                <img src="email.png" alt="Email">
+            </a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="artwork-section">
+            <div class="description">
+                <p>This is a still life drawing I created using HeavyPaint. In this work, I focused on shapes and colors instead of lines. By doing so, I paid more attention to details I normally wouldn't notice.</p>
+            </div>
+            <div class="image-container">
+                <img src="./img/39.png" alt="Wave artwork">
+            </div>
+        </div>
+
+        <div class="artwork-section">
+            <div class="image-container">
+                <img src="./img/20.png" alt="Drawing artwork">
+            </div>
+            <div class="description">
+                <p>This piece was made using HeavyPaint and came about spontaneously while I was eating a Happy Meal. There's no deeper meaning behind it—it's just a simple, straightforward snapshot of an everyday moment, focusing on the shapes and colors I observed.</p>
+            </div>
+        </div>
+
+        <div class="artwork-section">
+            <div class="description">
+                <p>This piece is based on a photo I found on Pinterest. I didn't start with any outlines but instead began by painting large shapes. Afterward, I refined the image by adding details with smaller shapes. Using this method forces me to observe the image in terms of big shapes rather than over-focusing on small details.</p>
+            </div>
+            <div class="image-container">
+                <img src="./img/26.png" alt="Flower artwork">
+            </div>
+        </div>
+        <div class="artwork-section">
+            <div class="image-container">
+                <img src="./img/pmww1wtvg48jq1j_2024-11-30-_1-14-07_AM.png" alt="Drawing artwork">
+            </div>
+            <div class="description">
+                <p>When I created this painting, I wanted to convey a sense of messiness and a free, expressive style. To achieve this, I used two different brushes: a flat brush for the solid colors and another brush with a strong pattern. The patterned brush was primarily used to add details and enhance the feeling of messiness.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
